@@ -1,0 +1,21 @@
+class Solution:
+    def validTree(self, n: int, edges: List[List[int]]) -> bool:
+        if len(edges) != n-1:
+            return False
+        q = collections.deque()
+        neighbours = collections.defaultdict(list)
+        for x,y in edges:
+            neighbours[x].append(y)
+            neighbours[y].append(x)
+
+        q.append(0)
+        visited = [0]*n
+        visited[0]=1
+        while q:
+            node = q.popleft()
+            visited[node]=1
+            for i in neighbours[node]:
+                if not visited[i]:
+                    q.append(i)
+
+        return True if sum(visited) == n else False
